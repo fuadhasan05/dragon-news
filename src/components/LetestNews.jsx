@@ -12,9 +12,6 @@ const LetestNews = () => {
         <p className="font-bold">
           Match Highlights: Germany vs Spain — as it happened !
         </p>
-        <p className="font-bold">
-          Match Highlights: Germany vs Spain — as it happened !
-        </p>
       </Marquee>
     </div>
   );
