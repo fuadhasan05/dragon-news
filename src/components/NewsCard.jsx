@@ -59,7 +59,7 @@ const NewsCard = ({ news }) => {
         <span className="text-orange-400 cursor-pointer font-bold"> Read More</span>
       </p>
 
-      <hr className="my-3" />
+      <hr className="my-3 text-base-200" />
 
       {/* Footer Section */}
       <div className="flex justify-between items-center text-gray-600">
