@@ -2,9 +2,10 @@ import React from "react";
 import { AiFillStar, AiOutlineStar, AiOutlineEye } from "react-icons/ai";
 import { CiBookmark } from "react-icons/ci";
 import { IoMdShare } from "react-icons/io";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
-  const { author, title, image_url, details, rating, total_view } = news;
+  const { id, author, title, image_url, details, rating, total_view } = news;
 
   // Function to format the date
   const formatDate = new Date(news.author.published_date).toLocaleDateString();
@@ -56,7 +57,13 @@ const NewsCard = ({ news }) => {
       {/* Details */}
       <p className="text-gray-700 mb-3">
         {details.length > 200 ? `${details.slice(0, 200)}...` : details}
-        <span className="text-orange-400 cursor-pointer font-bold"> Read More</span>
+        <Link
+          to={`/news-details/${id}`}
+          className="text-orange-400 cursor-pointer font-bold"
+        >
+          {" "}
+          Read More
+        </Link>
       </p>
 
       <hr className="my-3 text-base-200" />
@@ -65,7 +72,8 @@ const NewsCard = ({ news }) => {
       <div className="flex justify-between items-center text-gray-600">
         {/* Rating */}
         <div className="flex items-center">
-          {renderStars(Math.round(rating?.number || 0))} {/* Render stars dynamically */}
+          {renderStars(Math.round(rating?.number || 0))}{" "}
+          {/* Render stars dynamically */}
           <span className="font-bold ml-2">{rating?.number || "N/A"}</span>
         </div>
 
