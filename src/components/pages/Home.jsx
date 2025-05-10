@@ -3,7 +3,8 @@ import React from 'react';
 const Home = () => {
     return (
         <div>
-            Home
+            <h4>Select a Category</h4>
+
         </div>
     );
 };

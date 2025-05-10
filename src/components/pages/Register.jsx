@@ -1,6 +1,8 @@
 import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../provider/AuthProvider";
+import { toast, ToastContainer } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const Register = () => {
   const { createUser, setUser, updateUser } = use(AuthContext);
@@ -9,36 +11,36 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handelRegister = (e) => {
-    
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    if (name.length < 5){
-      setNameError("Name should be more than 5 charecter")
+    if (name.length < 5) {
+      setNameError("Name should be more than 5 characters");
       return;
-    }
-    else{
+    } else {
       setNameError("");
     }
     const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
 
-    // console.log({ name, photo, email, password });
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        updateUser({displayName : name, photoURL: photo}).then(()=>{
-          setUser({...user, displayName : name, photoURL: photo});
-          navigate("/");
-        })
-        .catch((error) => {
-          console.log(error);
-          setUser (user);
-        });
+        updateUser({ displayName: name, photoURL: photo })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: photo });
+            toast.success("Registration successful!"); // Success toast
+            navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+            setUser(user);
+            toast.error("Failed to update user profile."); // Error toast
+          });
       })
       .catch((error) => {
-        alert(error.message);
+        toast.error(error.message); // Error toast
       });
   };
 
@@ -59,8 +61,10 @@ const Register = () => {
               placeholder="Name"
               required
             />
-
-{nameError && <p className="text-red-400 text-xs">{nameError}</p>} {/* Display error */}
+            {nameError && (
+              <p className="text-red-400 text-xs">{nameError}</p>
+            )}{" "}
+            {/* Display error */}
 
             {/* Photo Url */}
             <label className="label">Photo URL</label>
@@ -97,7 +101,7 @@ const Register = () => {
             </button>
 
             <p className="font-semibold py-5 text-center">
-              Alradey Have An Account ?{" "}
+              Already Have An Account?{" "}
               <Link className="text-secondary" to="/auth/login">
                 Login
               </Link>
@@ -105,6 +109,7 @@ const Register = () => {
           </fieldset>
         </form>
       </div>
+      <ToastContainer /> {/* Add ToastContainer */}
     </div>
   );
 };
